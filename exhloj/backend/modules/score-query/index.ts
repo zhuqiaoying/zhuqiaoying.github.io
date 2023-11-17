@@ -100,7 +100,7 @@ class Service {
             let data = v as { type: string, score: number, status: STATUS }
             this.log(`Subtask ${k}(${data.type}): ${data.score} (${STATUS_TEXTS[data.status]})`)
         }
-        return { rid, filename: `code/${contestId}_P${pid}_${this.username}_${rid}_${score}.cpp` }
+        return { rid, filename: `code/${contestId}_P${pid}_${this.username}_${rid}_${score}.cpp`, score }
     }
     async getCode(record: string, filename: string) {
         const { body } = await this.get(`/record/${record}`)
@@ -122,18 +122,20 @@ export default async function queryScore(request: any) {
     const text = await request.text()
     try {
         const body = JSON.parse(text) as Request
+        if (body.url !== 'https://oj.hailiangedu.com')
+            throw new Error('Must query HLOJ.')
         const service = new Service(body.url, body.username, body.cookie, body.domain)
         const loggedIn: boolean = await service.checkLoggedIn()
         if (!loggedIn) throw new Error('Not logged in.')
         service.log('Logged in')
         const getContestSuccessful = await service.getContest(body.contestId)
         if (!getContestSuccessful) throw new Error('Contest not found.')
-        const { rid, filename } = await service.getScore(body.contestId, body.pid)
+        const { rid, filename, score } = await service.getScore(body.contestId, body.pid)
         await service.getCode(rid, filename)
         return new Response(
             JSON.stringify({
                 error: false,
-                score: 0,
+                score,
             }),
             { headers: { "content-type": "application/json" } },
         )
