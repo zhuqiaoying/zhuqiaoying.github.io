@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deno:
     runs-on: ubuntu-latest
     steps:
     - name: Check out
@@ -24,5 +24,4 @@ jobs:
         cd ..
       env:
         DENO_INSTALL: ~/.deno
-        PATH: $DENO_INSTALL/bin:$PATH
         DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
