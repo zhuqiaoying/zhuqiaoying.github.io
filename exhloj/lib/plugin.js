@@ -14,7 +14,7 @@ function definePlugin(
 }
 
 function atPlugin(
-    name, register, match = () => true
+    name, register, match = () => true,
 ) {
     if (!__exhloj_packages[name]) return
     __exhloj_packages[name].register.push(register)
