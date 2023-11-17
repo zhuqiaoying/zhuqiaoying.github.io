@@ -1,0 +1,8 @@
+{
+  "name": "@exhloj/score-query",
+  "version": "1.0.0",
+  "description": "Support query your score in OI contest.",
+  "main": "index.js",
+  "author": "Milmon <milmon@qq.com>",
+  "license": "GPL-3.0"
+}

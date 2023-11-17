@@ -1,0 +1,8 @@
+{
+  "name": "@extend-hloj/core",
+  "version": "1.0.0",
+  "description": "Core of extend HLOJ.",
+  "main": "index.js",
+  "author": "Milmon <milmon@qq.com>",
+  "license": "GPL-3.0"
+}

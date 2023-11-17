@@ -1,0 +1,8 @@
+{
+  "name": "@exhloj/message-notification",
+  "version": "1.0.0",
+  "description": "Do NOT display new message notification.",
+  "main": "index.css",
+  "author": "Milmon <milmon@qq.com>",
+  "license": "GPL-3.0"
+}
