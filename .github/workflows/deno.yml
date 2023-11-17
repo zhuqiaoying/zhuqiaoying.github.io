@@ -11,22 +11,17 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v3
-    - name: Set up Node
-      uses: actions/setup-node@v3
+    - name: Install Curl
+      uses: sozo-design/curl@v1.0.2
       with:
-        node-version: 18.x
-    - name: Install And Build
-      run: |
-        cd exhloj
-        npm i
-        npm i ts-node -g
-        cd ..
+        args: https://httpbin.org/get
     - name: Deploy to Deno
       run: |
         cd exhloj
         curl -fsSL https://deno.land/x/install/install.sh | sh
         deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
         deployctl deploy --project=exhloj --prod backend/server.ts
+        cd ..
       env:
         DENO_INSTALL: ~/.deno
         PATH: $DENO_INSTALL/bin:$PATH
