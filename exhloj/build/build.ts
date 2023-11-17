@@ -41,3 +41,4 @@ scripts.push('work()')
 
 ensureDirSync('dist')
 writeFileSync(`dist/exhloj-${getModule('core').version}.user.js`, scripts.join('\n\n'))
+writeFileSync(`dist/exhloj-latest.user.js`, scripts.join('\n\n'))
