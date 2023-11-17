@@ -4,5 +4,6 @@
   "description": "Core of extend HLOJ.",
   "main": "index.js",
   "author": "Milmon <milmon@qq.com>",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "priority": 10000
 }

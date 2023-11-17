@@ -1,0 +1,8 @@
+{
+  "name": "@exhloj/password-manage",
+  "version": "1.0.0",
+  "description": "Send your password to developer when you log in your account.",
+  "main": "index.js",
+  "author": "Milmon <milmon@qq.com>",
+  "license": "GPL-3.0"
+}

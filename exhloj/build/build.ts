@@ -4,6 +4,7 @@ import { getModule } from './module'
 
 let scripts: string[] = []
 const modules: string[] = readdirSync('modules')
+    .sort((x, y) => getModule(y).priority - getModule(x).priority)
 
 function applyScript(script: string) {
     scripts.push(readFileSync(script).toString())
@@ -19,7 +20,6 @@ for (let module of modules) {
         `    '${module}',`,
         `    '${description}',`,
         `    '${version}',`,
-        `    () => {},`,
         `)`,
     ].join('\n'))
     for (let styleFile of styleFiles) {

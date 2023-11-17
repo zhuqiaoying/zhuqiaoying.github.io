@@ -8,5 +8,6 @@ export function getModule(name: string) {
         description: json.description,
         styleFiles: files.filter(file => file.endsWith('.css')),
         indexFiles: json.main.endsWith('.js') ? [json.main] : [],
+        priority: json.priority || 5,
     }
 }
