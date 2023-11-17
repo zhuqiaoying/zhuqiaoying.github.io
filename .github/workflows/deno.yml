@@ -15,8 +15,10 @@ jobs:
       run: |
         cd exhloj
         curl -fsSL https://deno.land/x/install/install.sh | sh
-        ~/.deno/bin/deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
-        ~/.deno/bin/deployctl deploy --project=exhloj --prod backend/server.ts
+        export DENO_INSTALL="/home/runner/.deno"
+        export PATH="$DENO_INSTALL/bin:$PATH"
+        deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+        deployctl deploy --project=exhloj --prod backend/server.ts
         cd ..
       env:
         DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
