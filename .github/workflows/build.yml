@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out
+      uses: actions/checkout@v3
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+    - name: Install And Build
+      run: |
+        cd exhloj
+        npm i
+        npm i ts-node -g
+        cd ..
+    - name: Build Extend HLOJ User Script
+      run: |
+        cd exhloj
+        npm run build
+        cd ..
+    - name: Write CNAME
+      run: echo "zhuqiaoying.fucksc.cf" >exhloj/dist/CNAME
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: exhloj/dist
