@@ -1,4 +1,4 @@
-import superagent from 'superagent'
+import superagent from 'npm:superagent@8.1.2'
 import { writeFileSync } from 'node:fs'
 
 export enum STATUS {
