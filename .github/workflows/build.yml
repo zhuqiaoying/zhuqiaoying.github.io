@@ -29,6 +29,8 @@ jobs:
         cd exhloj
         npm run build
         cd ..
+    - name: Copy Index File
+      run: cp index.html exhloj/dist/index.html
     - name: Write CNAME
       run: echo "zhuqiaoying.fucksc.cf" >exhloj/dist/CNAME
     - name: Deploy to GitHub Pages
