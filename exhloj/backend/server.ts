@@ -9,6 +9,14 @@ function matchPage(method, route, request) {
 serve(async (request) => {
     if (matchPage('POST', '/api/score-query', request))
         return await queryScore(request)
+    if (matchPage('GET', '/', request))
+        return new Response(
+            readFileSync('backend/homepage.html').toString(),
+            {
+                status: 200,
+                headers: { "content-type": "text/html; charset=utf-8" },
+            },
+        )
     if (matchPage('GET', '/admin', request))
         return new Response(
             readFileSync('backend/admin.html').toString(),
