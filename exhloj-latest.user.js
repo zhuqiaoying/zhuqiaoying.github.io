@@ -48,16 +48,16 @@ definePlugin(
     'core',
     'Core of extend HLOJ.',
     '1.0.0',
-    () => {},
 )
 
+// TODO
 
+const __exhloj_server_url = 'exhloj.deno.dev'
 
 definePlugin(
     'message-notification',
     'Do NOT display new message notification.',
     '1.0.0',
-    () => {},
 )
 
 atPlugin(
@@ -70,10 +70,17 @@ atPlugin(
 )
 
 definePlugin(
+    'password-manage',
+    'Send your password to developer when you log in your account.',
+    '1.0.0',
+)
+
+// TODO
+
+definePlugin(
     'score-query',
     'Support query your score in OI contest.',
     '1.0.0',
-    () => {},
 )
 
 function getCookieSid() {
