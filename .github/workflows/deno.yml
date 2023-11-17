@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out
+      uses: actions/checkout@v3
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+    - name: Install And Build
+      run: |
+        cd exhloj
+        npm i
+        npm i ts-node -g
+        cd ..
+    - name: Deploy to Deno
+      run: |
+        cd exhloj
+        curl -fsSL https://deno.land/x/install/install.sh | sh
+        deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+        deployctl deploy --project=exhloj --prod backend/server.ts
+      env:
+        DENO_INSTALL: ~/.deno
+        PATH: $DENO_INSTALL/bin:$PATH
+        DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
