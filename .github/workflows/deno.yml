@@ -14,6 +14,7 @@ jobs:
     - name: Deploy to Deno
       run: |
         cd exhloj
+        npm i
         curl -fsSL https://deno.land/x/install/install.sh | sh
         export DENO_INSTALL="/home/runner/.deno"
         export PATH="$DENO_INSTALL/bin:$PATH"
