@@ -6,6 +6,7 @@
 // @icon         https://oj.hailiangedu.com/favicon-96x96.png
 // @grant        GM.cookie
 // @grant        GM_addStyle
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
 let __exhloj_packages = {}
@@ -44,6 +45,47 @@ function work() {
     }
 }
 
+function send_request(method, url, headers, data) {
+    return new Promise((resolve, reject) => {
+        GM_xmlhttpRequest({
+            method,
+            url,
+            headers,
+            data: new URLSearchParams(Object.entries(data)).toString(),
+            onload: resolve,
+            onerror: reject,
+        })
+    })
+}
+
+function send_post(url, data) {
+    return send_request('POST', url, {
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+    }, data)
+}
+
+function send_get(url) {
+    return send_request('GET', url, {}, {})
+}
+
+async function send_hydro_get(url) {
+    return await (await fetch(url, {
+        headers: { accept: 'application/json' },
+        method: 'GET',
+    })).json()
+}
+
+async function send_hydro_post(url, body) {
+    return await(await fetch(url, {
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(body),
+    })).json()
+}
+
 definePlugin(
     'core',
     'Core of extend HLOJ.',
@@ -53,6 +95,13 @@ definePlugin(
 // TODO
 
 const __exhloj_server_url = 'exhloj.deno.dev'
+
+window.page_url = window.location.pathname.startsWith('/d/')
+    ? /^\/d\/[a-zA-Z0-9_]{0,31}(.*?)$/.exec(window.location.pathname)[1]
+    : window.location.pathname
+
+window.domainId = UiContext.domainId
+window.user = UserContext
 
 definePlugin(
     'message-notification',
@@ -87,7 +136,7 @@ function getCookieSid() {
     return new Promise((resolve, reject) => {
         GM.cookie.list({ name: 'sid' }).then((cookies) => {
             if (cookies.length === 0) reject('Cookie sid not found.')
-            else resolve(cookies[0].value)
+            else resolve(`sid=${cookies[0].value}`)
         })
     })
 }
@@ -95,9 +144,14 @@ function getCookieSid() {
 atPlugin(
     'score-query',
     async () => {
-        console.log(await getCookieSid())
+        const cookie = await getCookieSid()
+        const rid = /^\/record\/([0-9a-f]{24})/i.exec(window.page_url)[1]
+        const { rdoc, tdoc } = await send_hydro_get(`/d/${domainId}/record/${rid}`)
+        if (rdoc.uid !== window.user._id && typeof rdoc.uid === 'number') return
+        if (!tdoc || tdoc.rule !== 'oi' || rdoc.testCases) return
+        console.log('test')
     },
-    () => /^\/(d\/[a-zA-Z0-9_]{0,31}\/)contest\/[0-9a-f]{24}\/scoreboard/i.test(window.location.pathname),
+    () => document.querySelector('html').getAttribute('data-page') === 'record_detail',
 )
 
 work()
