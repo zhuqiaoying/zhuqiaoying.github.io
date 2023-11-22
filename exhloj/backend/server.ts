@@ -7,7 +7,6 @@ function matchPage(method, route, request) {
 }
 
 serve(async (request) => {
-    console.log(request)
     if (matchPage('POST', '/api/score-query', request))
         return await queryScore(request)
     if (matchPage('GET', '/', request))

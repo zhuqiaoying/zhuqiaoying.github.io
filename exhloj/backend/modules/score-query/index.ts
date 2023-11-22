@@ -90,8 +90,8 @@ class Service {
         return true
     }
     async getScore(contestId: string, pid: string) {
-        const { body: { tdoc, psdict } } = await this.get(`/contest/${contestId}/problems`)
-        const { rid, status, score, subtasks } = psdict[tdoc.pids[+pid - 1]]
+        const { body: { psdict } } = await this.get(`/contest/${contestId}/problems`)
+        const { rid, status, score, subtasks } = psdict[pid]
         console.log(`Record ${rid} ${score} (${STATUS_TEXTS[status as STATUS]})`)
         this.log(`RID: ${rid}`)
         this.log(`Status: ${STATUS_TEXTS[status as STATUS]}`)
@@ -122,8 +122,8 @@ export default async function queryScore(request: any) {
     const text = await request.text()
     try {
         const body = JSON.parse(text) as Request
-        // if (body.url !== 'https://oj.hailiangedu.com')
-        //     throw new Error('Must query HLOJ.')
+        if (body.url !== 'https://oj.hailiangedu.com')
+            throw new Error('Must query HLOJ.')
         const service = new Service(body.url, body.username, body.cookie, body.domain)
         const loggedIn: boolean = await service.checkLoggedIn()
         if (!loggedIn) throw new Error('Not logged in.')
