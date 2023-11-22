@@ -68,6 +68,7 @@ class Service {
     log(content: string) { this.logs.push(content) }
 
     async checkLoggedIn(): Promise<boolean> {
+        console.log(await this.get(`/`))
         const { body: { UserContext } } = await this.get(`/`)
         const json = JSON.parse(UserContext)
         return json?.uname === this.username
