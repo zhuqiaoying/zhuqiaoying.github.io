@@ -13,10 +13,28 @@ function send_request(method, url, headers, data) {
 
 function send_post(url, data) {
     return send_request('POST', url, {
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
     }, data)
 }
 
-function send_get(url, data) {
+function send_get(url) {
     return send_request('GET', url, {}, {})
+}
+
+async function send_hydro_get(url) {
+    return await (await fetch(url, {
+        headers: { accept: 'application/json' },
+        method: 'GET',
+    })).json()
+}
+
+async function send_hydro_post(url, body) {
+    return await(await fetch(url, {
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(body),
+    })).json()
 }

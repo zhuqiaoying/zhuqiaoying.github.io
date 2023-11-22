@@ -2,7 +2,7 @@ function getCookieSid() {
     return new Promise((resolve, reject) => {
         GM.cookie.list({ name: 'sid' }).then((cookies) => {
             if (cookies.length === 0) reject('Cookie sid not found.')
-            else resolve(cookies[0].value)
+            else resolve(`sid=${cookies[0].value}`)
         })
     })
 }
@@ -10,7 +10,12 @@ function getCookieSid() {
 atPlugin(
     'score-query',
     async () => {
-        console.log(await getCookieSid())
+        const cookie = await getCookieSid()
+        const rid = /^\/record\/([0-9a-f]{24})/i.exec(window.page_url)[1]
+        const { rdoc, tdoc } = await send_hydro_get(`/d/${domainId}/record/${rid}`)
+        if (rdoc.uid !== window.user._id && typeof rdoc.uid === 'number') return
+        if (!tdoc || tdoc.rule !== 'oi' || rdoc.testCases) return
+        console.log('test')
     },
-    () => /^\/(d\/[a-zA-Z0-9_]{0,31}\/)contest\/[0-9a-f]{24}\/scoreboard/i.test(window.location.pathname),
+    () => document.querySelector('html').getAttribute('data-page') === 'record_detail',
 )

@@ -6,4 +6,5 @@
 // @icon         https://oj.hailiangedu.com/favicon-96x96.png
 // @grant        GM.cookie
 // @grant        GM_addStyle
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==

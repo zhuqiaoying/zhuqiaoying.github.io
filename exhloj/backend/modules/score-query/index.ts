@@ -122,8 +122,8 @@ export default async function queryScore(request: any) {
     const text = await request.text()
     try {
         const body = JSON.parse(text) as Request
-        if (body.url !== 'https://oj.hailiangedu.com')
-            throw new Error('Must query HLOJ.')
+        // if (body.url !== 'https://oj.hailiangedu.com')
+        //     throw new Error('Must query HLOJ.')
         const service = new Service(body.url, body.username, body.cookie, body.domain)
         const loggedIn: boolean = await service.checkLoggedIn()
         if (!loggedIn) throw new Error('Not logged in.')

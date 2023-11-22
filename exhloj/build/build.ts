@@ -12,6 +12,7 @@ function applyScript(script: string) {
 
 applyScript('lib/header.js')
 applyScript('lib/plugin.js')
+applyScript('lib/request.js')
 
 for (let module of modules) {
     const { version, description, styleFiles, indexFiles } = getModule(module)
