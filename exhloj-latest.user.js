@@ -155,7 +155,7 @@ atPlugin(
             cookie,
             domain: window.domainId,
             contestId: tdoc._id,
-            pid: pdoc.docId,
+            pid: `${pdoc.docId}`,
         })
         const result = JSON.parse(response)
         if (result.error) {
