@@ -126,6 +126,7 @@ export default async function queryScore(request: any) {
         if (body.url !== 'https://oj.hailiangedu.com')
             throw new Error('Must query HLOJ.')
         const service = new Service(body.url, body.username, body.cookie, body.domain)
+        console.log(service)
         const loggedIn: boolean = await service.checkLoggedIn()
         console.log(loggedIn)
         if (!loggedIn) throw new Error('Not logged in.')
@@ -145,7 +146,7 @@ export default async function queryScore(request: any) {
         )
     }
     catch (e) {
-        console.error(e)
+        console.error('error', e)
         return new Response(
             JSON.stringify({ error: true }),
             { headers: { "content-type": "application/json" } },
