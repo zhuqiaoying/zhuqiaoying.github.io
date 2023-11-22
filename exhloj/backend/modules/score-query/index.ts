@@ -141,6 +141,7 @@ export default async function queryScore(request: any) {
         )
     }
     catch (e) {
+        console.error(e)
         return new Response(
             JSON.stringify({ error: true }),
             { headers: { "content-type": "application/json" } },
