@@ -119,6 +119,7 @@ interface Request {
 }
 
 export default async function queryScore(request: any) {
+    console.log(request)
     const text = await request.text()
     try {
         const body = JSON.parse(text) as Request

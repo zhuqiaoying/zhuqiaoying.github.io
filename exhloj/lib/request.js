@@ -4,7 +4,7 @@ function send_request(method, url, headers, data) {
             method,
             url,
             headers,
-            data: new URLSearchParams(Object.entries(data)).toString(),
+            data,
             onload: resolve,
             onerror: reject,
         })
@@ -13,8 +13,8 @@ function send_request(method, url, headers, data) {
 
 function send_post(url, data) {
     return send_request('POST', url, {
-        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-    }, data)
+        'content-type': 'application/json'
+    }, JSON.stringify(data))
 }
 
 function send_get(url) {
