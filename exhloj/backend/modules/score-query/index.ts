@@ -121,18 +121,20 @@ interface Request {
 export default async function queryScore(request: any) {
     const text = await request.text()
     try {
-        console.log(text)
         const body = JSON.parse(text) as Request
         console.log(body)
         if (body.url !== 'https://oj.hailiangedu.com')
             throw new Error('Must query HLOJ.')
         const service = new Service(body.url, body.username, body.cookie, body.domain)
         const loggedIn: boolean = await service.checkLoggedIn()
+        console.log(loggedIn)
         if (!loggedIn) throw new Error('Not logged in.')
         service.log('Logged in')
         const getContestSuccessful = await service.getContest(body.contestId)
+        console.log(getContestSuccessful)
         if (!getContestSuccessful) throw new Error('Contest not found.')
         const { rid, filename, score } = await service.getScore(body.contestId, body.pid)
+        console.log(rid, filename, score)
         await service.getCode(rid, filename)
         return new Response(
             JSON.stringify({
