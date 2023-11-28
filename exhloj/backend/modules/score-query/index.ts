@@ -1,4 +1,4 @@
-import superagent from 'https://ga.jspm.io/npm:superagent@8.1.2/lib/node/index.js'
+import superagent from 'npm:superagent@8.1.2'
 import { writeFileSync } from 'node:fs'
 
 export enum STATUS {

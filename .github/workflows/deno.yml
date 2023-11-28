@@ -19,7 +19,7 @@ jobs:
         export DENO_INSTALL="/home/runner/.deno"
         export PATH="$DENO_INSTALL/bin:$PATH"
         deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
-        deployctl deploy --project=exhloj --prod backend/server.ts
+        deployctl deploy --project=exhloj --prod backend/server.ts --allow-all
         cd ..
       env:
         DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
